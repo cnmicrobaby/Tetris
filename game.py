@@ -36,7 +36,7 @@ base_folder = os.path.dirname(__file__)
 
 
 def show_text(surf, text, size, x, y, color=WHITE):
-    #font_name = os.path.join(base_folder, 'font/font.ttc')
+    # font_name = os.path.join(base_folder, 'font/font.ttc')
     font = pygame.font.SysFont('SimHei', size)
     text_surface = font.render(text, True, color)
     text_rect = text_surface.get_rect()
@@ -45,8 +45,8 @@ def show_text(surf, text, size, x, y, color=WHITE):
 
 
 class CubeShape(object):
-    SHAPES = ['I', 'J', 'L', 'O', 'S', 'T', 'Z']
-    I = [[(0, -1), (0, 0), (0, 1), (0, 2)],
+    SHAPES = ['A', 'J', 'L', 'B', 'S', 'T', 'Z']
+    A = [[(0, -1), (0, 0), (0, 1), (0, 2)],
          [(-1, 0), (0, 0), (1, 0), (2, 0)]]
     J = [[(-2, 0), (-1, 0), (0, 0), (0, -1)],
          [(-1, 0), (0, 0), (0, 1), (0, 2)],
@@ -56,7 +56,7 @@ class CubeShape(object):
          [(1, 0), (0, 0), (0, 1), (0, 2)],
          [(0, -1), (0, 0), (1, 0), (2, 0)],
          [(0, -2), (0, -1), (0, 0), (-1, 0)]]
-    O = [[(0, 0), (0, 1), (1, 0), (1, 1)]]
+    B = [[(0, 0), (0, 1), (1, 0), (1, 1)]]
     S = [[(-1, 0), (0, 0), (0, 1), (1, 1)],
          [(1, -1), (1, 0), (0, 0), (0, 1)]]
     T = [[(0, -1), (0, 0), (0, 1), (-1, 0)],
@@ -66,7 +66,7 @@ class CubeShape(object):
     Z = [[(0, -1), (0, 0), (1, 0), (1, 1)],
          [(-1, 0), (0, 0), (0, -1), (1, -1)]]
     SHAPES_WITH_DIR = {
-        'I': I, 'J': J, 'L': L, 'O': O, 'S': S, 'T': T, 'Z': Z
+        'A': A, 'J': J, 'L': L, 'B': B, 'S': S, 'T': T, 'Z': Z
     }
 
     def __init__(self):
@@ -187,9 +187,9 @@ def remove_full_line():
     screen_color_matrix = new_matrix
 
 
-def show_welcome(screen):
-    show_text(screen, u'俄罗斯方块', 30, WIDTH / 2, HEIGHT / 2)
-    show_text(screen, u'按任意键开始游戏', 20, WIDTH / 2, HEIGHT / 2 + 50)
+def show_welcome(scr):
+    show_text(scr, u'俄罗斯方块', 30, WIDTH / 2, HEIGHT / 2)
+    show_text(scr, u'按任意键开始游戏', 20, WIDTH / 2, HEIGHT / 2 + 50)
 
 
 running = True
@@ -215,7 +215,7 @@ while running:
             elif event.key == pygame.K_UP:
                 live_cube.rotate()
             elif event.key == pygame.K_SPACE:
-                while live_cube.down() == True:
+                while live_cube.down():
                     pass
             remove_full_line()
     # level 是为了方便游戏的难度，level 越高 FPS // level 的值越小
@@ -223,9 +223,9 @@ while running:
     if gameover is False and counter % (FPS // level) == 0:
         # down 表示下移骨牌，返回False表示下移不成功，可能超过了屏幕或者和之前固定的
         # 小方块冲突了
-        if live_cube.down() == False:
-            for cube in live_cube.get_all_gridpos():
-                screen_color_matrix[cube[0]][cube[1]] = live_cube.color
+        if not live_cube.down():
+            for mycube in live_cube.get_all_gridpos():
+                screen_color_matrix[mycube[0]][mycube[1]] = live_cube.color
             live_cube = CubeShape()
             if live_cube.conflict(live_cube.center):
                 gameover = True
