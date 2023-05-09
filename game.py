@@ -36,8 +36,8 @@ base_folder = os.path.dirname(__file__)
 
 
 def show_text(surf, text, size, x, y, color=WHITE):
-    # font_name = os.path.join(base_folder, 'font/font.ttc')
-    font = pygame.font.SysFont('SimHei', size)
+    font_name = os.path.join(base_folder, 'font/msyh.ttc')
+    font = pygame.font.Font(font_name, size)
     text_surface = font.render(text, True, color)
     text_rect = text_surface.get_rect()
     text_rect.midtop = (x, y)
