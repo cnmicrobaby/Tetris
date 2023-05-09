@@ -168,7 +168,7 @@ def remove_full_line():
     global screen_color_matrix
     global score
     global level
-    new_matrix = [[None] * GRID_NUM_WIDTH for i in range(GRID_NUM_HEIGHT)]
+    new_matrix = [[None] * GRID_NUM_WIDTH for _ in range(GRID_NUM_HEIGHT)]
     index = GRID_NUM_HEIGHT - 1
     n_full_line = 0
     for i in range(GRID_NUM_HEIGHT - 1, -1, -1):
